@@ -1,0 +1,51 @@
+TR001|Doremon|Fujiko F. Fujio|Thieu nhi|1995|Con
+TR002|Conan|Gosho Aoyama|Trinh tham|1994|Cho thue
+TR003|One Piece|Eiichiro Oda|Phieu luu|1997|Con
+TR004|Naruto|Masashi Kishimoto|Hanh dong|1999|Het
+TR005|Bleach|Tite Kubo|Sieu nhien|2001|Cho thue
+TR006|Attack on Titan|Hajime Isayama|Hanh dong|2009|Con
+TR007|Death Note|Tsugumi Ohba|Tam ly|2003|Het
+TR008|Tokyo Ghoul|Sui Ishida|Kinh di|2011|Cho thue
+TR009|My Hero Academia|Kohei Horikoshi|Sieu anh hung|2014|Con
+TR010|Jujutsu Kaisen|Gege Akutami|Ma thuat|2018|Con
+TR011|Chainsaw Man|Tatsuki Fujimoto|Kinh di|2019|Cho thue
+TR012|Dragon Ball|Akira Toriyama|Hanh dong|1984|Het
+TR013|Fairy Tail|Hiro Mashima|Phieu luu|2006|Con
+TR014|Black Clover|Yuki Tabata|Phep thuat|2015|Con
+TR015|D.Gray-man|Katsura Hoshino|Huyen bi|2004|Cho thue
+TR016|Blue Exorcist|Kazue Kato|Sieu nhien|2009|Con
+TR017|Vinland Saga|Makoto Yukimura|Lich su|2005|Het
+TR018|Demon Slayer|Koyoharu Gotouge|Hanh dong|2016|Cho thue
+TR019|The Promised Neverland|Kaiu Shirai|Khoa hoc vien tuong|2016|Con
+TR020|Mob Psycho 100|ONE|Tam linh|2012|Het
+TR021|Spy x Family|Tatsuya Endo|Gia dinh|2019|Con
+TR022|Berserk|Kentaro Miura|Dark fantasy|1989|Cho thue
+TR023|Fullmetal Alchemist|Hiromu Arakawa|Khoa hoc gia tuong|2001|Con
+TR024|Reborn!|Akira Amano|Toi pham|2004|Con
+TR025|Parasyte|Hitoshi Iwaaki|Kinh di|1990|Cho thue
+TR026|Claymore|Norihiro Yagi|Dark fantasy|2001|Het
+TR027|Hellsing|Kouta Hirano|Ma ca rong|1997|Con
+TR028|Trigun|Yasuhiro Nightow|Vien Tay|1995|Cho thue
+TR029|Fate stay night|Type-Moon|Than thoai|2004|Het
+TR030|Soul Eater|Atsushi Ohkubo|Phu thuy|2003|Con
+TR031|Inuyasha|Rumiko Takahashi|Da su|1996|Het
+TR032|Yu Yu Hakusho|Yoshihiro Togashi|Tam linh|1990|Cho thue
+TR033|Great Teacher Onizuka|Tohru Fujisawa|Hoc duong|1997|Con
+TR034|Katekyo Hitman Reborn!|Akira Amano|Mafia|2004|Het
+TR035|Zatch Bell!|Makoto Raiku|Phep thuat|2001|Con
+TR036|Shaman King|Hiroyuki Takei|Tam linh|1998|Cho thue
+TR037|Ranma 1/2|Rumiko Takahashi|Hai huoc|1987|Con
+TR038|Detective School Q|Seimaru Amagi|Trinh tham|2001|Het
+TR039|Beelzebub|Ryuhei Tamura|Hai huoc|2009|Cho thue
+TR040|Toriko|Mitsutoshi Shimabukuro|Am thuc|2008|Con
+TR041|Dr. Stone|Riichiro Inagaki|Khoa hoc|2017|Het
+TR042|Bakuman|Tsugumi Ohba|Hoc duong|2008|Con
+TR043|Sket Dance|Kenta Shinohara|Hoc duong|2007|Cho thue
+TR044|Assassination Classroom|Yusei Matsui|Hai huoc|2012|Con
+TR045|Dorohedoro|Q Hayashida|Gia tuong den toi|2000|Het
+TR046|Ajin|Gamon Sakurai|Sieu nhien|2012|Con
+TR047|BTOOOM!|Junya Inoue|Sinh ton|2009|Cho thue
+TR048|Gantz|Hiroya Oku|Hanh dong|2000|Het
+TR049|Elfen Lied|Lynn Okamoto|Kinh di|2002|Con
+TR050|Akame ga Kill!|Takahiro|Phieu luu|2010|Cho thue
+

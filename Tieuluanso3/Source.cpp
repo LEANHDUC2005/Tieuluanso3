@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Header.h"
+// Chủ Nhật , ngày 13 tháng 7 năm 2025
+// Viết bởi Lê Anh Đức - 23701131
 
 // Khởi tạo Queue
 void Init(Queue *q) {
@@ -47,12 +49,11 @@ void EnQueue(Queue *q, thuvien x) {
 thuvien DeQueue(Queue *q) {
     thuvien error;
     strcpy(error.maTruyen, "NULL");
-    strcpy(error.maTruyen, "NULL");
+    strcpy(error.tenTruyen, "NULL");
     if (isEmpty(q)) {
-        printf("Queue rỗng\n");
+        printf("| Queue rỗng !\n");
         return error; // Trả về 1 để báo lỗi (có thể dùng giá trị đặc biệt hơn)
     }
-
     Node* p = q->front;
     q->front = q->front->pNext;
 
@@ -73,7 +74,16 @@ thuvien Front(Queue *q) {
         return error;
     return q->front->data;
 }
-
+// Xem thông tin phần tử cuối Queue
+thuvien Rear(Queue* q)
+{
+    thuvien error;
+    strcpy(error.maTruyen, "NULL");
+    strcpy(error.maTruyen, "NULL");
+    if (isEmpty(q))
+        return error;
+    return q->rear->data;
+}
 // Hàm nhập chuỗi
 void nhapChuoi(char str[], int size) {
     fgets(str, size, stdin);
@@ -82,7 +92,7 @@ void nhapChuoi(char str[], int size) {
 // Hàm kiểm tra mã truyện
 int IsmaTruyen(char str[])
 {
-    if (strlen(str) > 8)
+    if (strlen(str) > 10)
         return 0;
     return 1;   
 }
@@ -107,7 +117,7 @@ void Nhap(Queue *q)
     int count = 1;
     while (true)
     {
-        printf("| Số lần nhập truyện %d\n ", count);
+        printf("| Số lần nhập truyện %d\n", count);
         do
         {
             printf("| Nhập mã truyện ( nhập 0 để kêt thúc ): ");
@@ -118,7 +128,8 @@ void Nhap(Queue *q)
             }
             if (!IsmaTruyen(thuvien.maTruyen))
             {
-                printf("Mã truyện tối đa 8 ký tự !\n");
+                printf("Mã truyện tối đa 10 ký tự !\n");
+                while (getchar() != '\n');
             }
         } while (!IsmaTruyen(thuvien.maTruyen));
         printf("DEBUG: %s\n", thuvien.maTruyen);
@@ -151,38 +162,39 @@ void Nhap(Queue *q)
     }
 }
 //2. Hiển thị danh sách các phần tử.
-void xuat1(thuvien *tv)
+void xuat1(thuvien* tv)
 {
-    printf("---------------------------------------------------------------------------------------------\n");
-    printf("| %-8s | %-10s | %-20s | %-15s | %-12d | %-10s |\n",
-            tv->maTruyen,
-            tv->tenTruyen,
-            tv->tacGia,
-            tv->theloai,
-            tv->namxuatban,
-            tv->tinhtrang);
-    printf("_____________________________________________________________________________________________\n");
-
+    printf("| %-10s | %-26s | %-22s | %-20s | %-10d | %-12s |\n",
+        tv->maTruyen,
+        tv->tenTruyen,
+        tv->tacGia,
+        tv->theloai,
+        tv->namxuatban,
+        tv->tinhtrang); 
 }
-void xuat(Queue *q)
+
+void xuat(Queue* q)
 {
-    printf("---------------------------------------------------------------------------------------------\n");
+    if (isEmpty(q))
+    {
+        printf("\n| Danh sách truyện rỗng!\n");
+        return;
+    }
+    printf("\n|========================================== DANH SÁCH TRUYỆN =========================================================|\n");
+    printf("| %-10s | %-26s | %-22s | %-20s | %-10s | %-12s |\n",
+        "Ma truyen", "Ten truyen", "Tac gia", "The loai", "Nam XB", "Tinh trang");
+    printf("|=====================================================================================================================|\n");
+
     Node* temp = q->front;
     while (temp != NULL)
     {
-        printf("| %-8s | %-10s | %-20s | %-15s | %-12d | %-10s |\n",
-            temp->data.maTruyen,
-            temp->data.tenTruyen,
-            temp->data.tacGia,
-            temp->data.theloai,
-            temp->data.namxuatban,
-            temp->data.tinhtrang);
-        printf("_____________________________________________________________________________________________\n");
-       
+        xuat1(&temp->data);
         temp = temp->pNext;
     }
-    printf("---------------------------------------------------------------------------------------------\n");
+    printf("|---------------------------------------------------------------------------------------------------------------------|\n");
+    printf("\n");
 }
+
 //3. Tìm kiếm phần tử theo một tiêu chí(ví dụ : mã số, tên...).
 Queue TimkiemTruyen(Queue* q, char inforSearch[])
 {
@@ -266,6 +278,135 @@ void CapnhatTruyen(Queue* q, char maTruyenxoa[])
         nhapChuoi(temp->data.tinhtrang, sizeof(temp->data.tinhtrang));
     }  
 }
+// SẮP XẾP DANH SÁCH
+// Hàm đổi chỗ hai phần tử
+void swap(thuvien* a, thuvien* b)
+{
+    thuvien temp = *a;
+    *a = *b;
+    *b = temp;
+}
+// Sao chép danh sách
+void copyList(Queue* q, Queue* q2)
+{
+    Init(q2);
+    Node* temp = q->front;
+    while (temp != NULL)
+    {
+        EnQueue(q2, temp->data);
+        temp = temp->pNext;
+    }
+}
+// Sắp xếp theo mã truyện
+/* Thuat toan interchange sort                
+Thuat toan sap xep Interchange Sort :
+for (i = 0; i < n; i++)
+    for (j = i + 1; j < n; j++)
+        if s[i] > s[j]
+            swap(s[i], s[j]) */
+void sapxepMatruyenTangdan(Queue* q)
+{
+    Node* i= q->front;
+    while (i->pNext != NULL)
+    {
+        Node* j = i->pNext;
+        while (j != NULL)
+        {
+            if (strcmp(i->data.maTruyen, j->data.maTruyen) > 0)
+            {
+                swap(&i->data, &j->data);
+            }
+            j = j->pNext;
+        }
+        i = i->pNext;
+    }
+}
+void sapxepMatruyenGiamdan(Queue* q)
+{
+    Node* i = q->front;
+    while (i->pNext != NULL)
+    {
+        Node* j = i->pNext;
+        while (j != NULL)
+        {
+            if (strcmp(i->data.maTruyen, j->data.maTruyen) < 0)
+            {
+                swap(&i->data, &j->data);
+            }
+            j = j->pNext;
+        }
+        i = i->pNext;
+    }
+}
+// Sắp xếp theo TÊN TRUYỆN
+// Từ A->Z
+void sapxepTentruyenTangdan(Queue* q)
+{
+    Node* i = q->front;
+    while (i->pNext != NULL)
+    {
+        Node* j = i->pNext;
+        while (j != NULL)
+        {
+            if (strcmp(i->data.tenTruyen, j->data.tenTruyen) > 0)
+            {
+                swap(&i->data, &j->data);
+            }
+            j = j->pNext;
+        }
+        i = i->pNext;
+    }
+}
+// Từ Z->A
+void sapxepTentruyenGiamdan(Queue* q)
+{
+    Node* i = q->front;
+    while (i->pNext != NULL)
+    {
+        Node* j = i->pNext;
+        while (j != NULL)
+        {
+            if (strcmp(i->data.tenTruyen, j->data.tenTruyen) < 0)
+            {
+                swap(&i->data, &j->data);
+            }
+            j = j->pNext;
+        }
+        i = i->pNext;
+    }
+}
+// Sắp xếp theo Năm xuất bản
+// Thuat toan Selection Sort
+void sapxepNamxuatbanTangdan(Queue* q)
+{
+    for (Node* i = q->front; i != NULL; i = i->pNext)
+    {
+        Node* min = i;
+        for (Node* j = i; j != NULL; j = j->pNext)
+        {
+            if (j->data.namxuatban < min->data.namxuatban)
+            {
+                min = j;
+            }
+        }
+        if (min!=i) swap(&i->data, &min->data);
+    }
+}
+void sapxepNamxuatbanGiamdan(Queue* q)
+{
+    for (Node* i = q->front; i != NULL; i = i->pNext)
+    {
+        Node* max = i;
+        for (Node* j = i; j != NULL; j = j->pNext)
+        {
+            if (j->data.namxuatban > max->data.namxuatban)
+            {
+                max = j;
+            }
+        }
+        if(max!=i) swap(&i->data, &max->data);
+    }
+}
 // Ghi dữ liệu ra tệp 
 void GhiFile(Queue* q, const char *filename )
 {
@@ -336,3 +477,15 @@ void freelist(Queue* q)
     }
     q->front = q->rear = NULL;
 }
+// Hàm chọn chiều sắp xếp   
+char up_or_down()
+{
+    char updownchoice;
+    printf("Ban muon sap xep theo chieu:\n");
+    printf("[A].Tang dan\n");
+    printf("[B].Giam dan\n");
+    printf("Lua chon cua ban [A-B]:");
+    scanf_s(" %c", &updownchoice, (unsigned int)sizeof(updownchoice));
+    return updownchoice;
+}
+
