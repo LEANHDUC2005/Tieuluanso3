@@ -1,4 +1,5 @@
-﻿#include <stdio.h>
+﻿#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
 #include <stdlib.h>
 #include "Header.h"
 
@@ -97,6 +98,7 @@ int Kiemtratrungma(Queue* q,char makiemtra[])
         }
         temp = temp->pNext;
     }
+    return 0;
 }
 
 void Nhap(Queue *q)
@@ -105,12 +107,12 @@ void Nhap(Queue *q)
     int count = 1;
     while (true)
     {
-        printf("| Số lần nhập truyện ( nhập 0 để kêt thúc : %d", count);
+        printf("| Số lần nhập truyện %d\n ", count);
         do
         {
-            printf("| Nhập mã truyện: ");
+            printf("| Nhập mã truyện ( nhập 0 để kêt thúc ): ");
             nhapChuoi(thuvien.maTruyen, sizeof(thuvien.maTruyen));
-            if (strcmp(thuvien.maTruyen, "0") == 0)
+            if (strcmp(thuvien.maTruyen,"0") == 0)
             {
                 return;
             }
