@@ -1,10 +1,136 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Header.h"
 // Chủ Nhật , ngày 13 tháng 7 năm 2025
 // Viết bởi Lê Anh Đức - 23701131
-
+// Khoi tao Linked List cho danh sách truyện
+// Cac ham xu ly du lieu 
+void nhapChuoi(char str[], int size) {
+    fgets(str, size, stdin);
+    str[strcspn(str, "\n")] = '\0';
+}
+void IsmaTruyen(char str[]) {
+    if (strlen(str) > 10) {
+        printf("Mã truyện tối đa 10 ký tự !\n");
+        while (getchar() != '\n');
+    }
+}
+void Kiemtratrungma(List* L, char makiemtra[]) {
+    Nodetruyen* temp = L->head;
+    while (temp != NULL) {
+        if (strcmp(temp->data.maTruyen, makiemtra) == 0) {
+            printf("| Mã truyện bị trùng ! Vui lòng nhập mã truyện khác.\n");
+            return 1; // Trả về 1 để báo lỗi (có thể dùng giá trị đặc biệt hơn)
+        }
+        temp = temp->pNext;
+    }
+    return 0; // Không có mã truyện trùng
+}
+// Cac ham xu ly danh sach lien ket don cho danh sach truyen
+void initList(List *L) {
+    L->head = NULL;
+    L->tail = NULL;
+}   
+// Thêm phần tử vào đầu danh sách   
+void AddHead(List* L, datatruyen data) {
+    Nodetruyen* p = (Nodetruyen*)malloc(sizeof(Nodetruyen));
+    if (p == NULL) {
+        printf("Khong du bo nho !\n");
+        return;
+    }
+    p->data = data;
+    p->pNext = L->head;
+    L->head = p;
+    if (L->tail == NULL) {
+        L->tail = p; // Nếu danh sách rỗng, cập nhật tail
+    }
+}   
+// Thêm phần tử vào cuối danh sách
+void AddTail(List* L, datatruyen data) {
+    Nodetruyen* p = (Nodetruyen*)malloc(sizeof(Nodetruyen));
+    if (p == NULL) {
+        printf("Khong du bo nho !\n");
+        return;
+    }
+    p->data = data;
+    p->pNext = NULL;
+    if (L->tail != NULL) {
+        L->tail->pNext = p; // Nối phần tử mới vào cuối danh sách
+    } else {
+        L->head = p; // Nếu danh sách rỗng, cập nhật head
+    }
+    L->tail = p; // Cập nhật tail
+}
+// Thêm truyện vào dau danh sách
+void themTruyendau(List* L)
+{
+    while (true)
+    {
+        datatruyen data;
+		printf("| Nhập mã truyện ( nhập 0 để kết thúc ): ");
+        nhapChuoi(data.maTruyen, sizeof(data.maTruyen));
+        if (strcmp(data.maTruyen, "0") == 0) return; // Kết thúc nhập nếu mã truyện là "0"
+        if (!IsmaTruyen(data.maTruyen)) {
+            printf("Mã truyện tối đa 10 ký tự !\n");
+            continue;
+        }
+        if (Kiemtratrungma(L, data.maTruyen)) continue; // Kiểm tra trùng mã truyện
+        printf("| Nhập tên truyện: ");
+        nhapChuoi(data.tenTruyen, sizeof(data.tenTruyen));
+        printf("| Nhập tên tác giả: ");
+        nhapChuoi(data.tacGia, sizeof(data.tacGia));
+        printf("| Nhập thể loại: ");
+        nhapChuoi(data.theloai, sizeof(data.theloai));
+        do {
+            printf("| Nhập năm xuất bản của sách: ");
+            scanf_s("%d", &data.namxuatban);
+            while (getchar() != '\n');
+            if (data.namxuatban <= 0) {
+                printf("| Năm xuất bản phải là số dương !\n");
+            }
+        } while (data.namxuatban <= 0);
+        printf("| Nhập tình trạng của truyện: ");
+        nhapChuoi(data.tinhtrang, sizeof(data.tinhtrang));
+		AddHead(L, data); // Thêm truyện vào cuối danh sách
+    }
+}
+// Thêm truyện vào cuoi danh sách
+void themTruyendau(List* L)
+{
+    while (true)
+    {
+        datatruyen data;
+        printf("| Nhập mã truyện ( nhập 0 để kết thúc ): ");
+        nhapChuoi(data.maTruyen, sizeof(data.maTruyen));
+        if (strcmp(data.maTruyen, "0") == 0) return; // Kết thúc nhập nếu mã truyện là "0"
+        if (!IsmaTruyen(data.maTruyen)) {
+            printf("Mã truyện tối đa 10 ký tự !\n");
+            continue;
+        }
+        if (Kiemtratrungma(L, data.maTruyen)) continue; // Kiểm tra trùng mã truyện
+        printf("| Nhập tên truyện: ");
+        nhapChuoi(data.tenTruyen, sizeof(data.tenTruyen));
+        printf("| Nhập tên tác giả: ");
+        nhapChuoi(data.tacGia, sizeof(data.tacGia));
+        printf("| Nhập thể loại: ");
+        nhapChuoi(data.theloai, sizeof(data.theloai));
+        do {
+            printf("| Nhập năm xuất bản của sách: ");
+            scanf_s("%d", &data.namxuatban);
+            while (getchar() != '\n');
+            if (data.namxuatban <= 0) {
+                printf("| Năm xuất bản phải là số dương !\n");
+            }
+        } while (data.namxuatban <= 0);
+        printf("| Nhập tình trạng của truyện: ");
+        nhapChuoi(data.tinhtrang, sizeof(data.tinhtrang));
+        AddTail(L, data); // Thêm truyện vào cuối danh sách
+    }
+}
+// Hiển thị danh sách truyện
+void 
 // Khởi tạo Queue
 void Init(Queue *q) {
     q->front = NULL;
@@ -25,7 +151,7 @@ int isFull(Queue *q) {
 }
 
 // Thêm một phần tử vào Queue
-void EnQueue(Queue *q, thuvien x) {
+void EnQueue(Queue *q, thuetruyen x) {
     Node* p = (Node*)malloc(sizeof(Node));
     if (p == NULL)
     {
@@ -46,8 +172,8 @@ void EnQueue(Queue *q, thuvien x) {
 }
 
 // Lấy thông tin và hủy phần tử ở đầu Queue
-thuvien DeQueue(Queue *q) {
-    thuvien error;
+thuetruyen DeQueue(Queue *q) {
+    thuetruyen error;
     strcpy(error.maTruyen, "NULL");
     strcpy(error.tenTruyen, "NULL");
     if (isEmpty(q)) {
@@ -60,14 +186,14 @@ thuvien DeQueue(Queue *q) {
     if (q->front == NULL) // Nếu sau khi xóa mà Queue rỗng
         q->rear = NULL;
 
-    thuvien x = p->data;
+    thuetruyen x = p->data;
     delete p;
     return x;
 }
 
 // Xem thông tin phần tử đầu Queue
-thuvien Front(Queue *q) {
-    thuvien error;
+thuetruyen Front(Queue *q) {
+    thuetruyen error;
     strcpy(error.maTruyen, "NULL");
     strcpy(error.maTruyen, "NULL");
     if (isEmpty(q))
@@ -75,9 +201,9 @@ thuvien Front(Queue *q) {
     return q->front->data;
 }
 // Xem thông tin phần tử cuối Queue
-thuvien Rear(Queue* q)
+thuetruyen Rear(Queue* q)
 {
-    thuvien error;
+    thuetruyen error;
     strcpy(error.maTruyen, "NULL");
     strcpy(error.maTruyen, "NULL");
     if (isEmpty(q))
@@ -85,10 +211,7 @@ thuvien Rear(Queue* q)
     return q->rear->data;
 }
 // Hàm nhập chuỗi
-void nhapChuoi(char str[], int size) {
-    fgets(str, size, stdin);
-    str[strcspn(str, "\n")] = '\0';
-}
+
 // Hàm kiểm tra mã truyện
 int IsmaTruyen(char str[])
 {
@@ -113,7 +236,7 @@ int Kiemtratrungma(Queue* q,char makiemtra[])
 
 void Nhap(Queue *q)
 {
-    thuvien thuvien;
+    thuetruyen thuetruyen;
     int count = 1;
     while (true)
     {
@@ -121,48 +244,37 @@ void Nhap(Queue *q)
         do
         {
             printf("| Nhập mã truyện ( nhập 0 để kêt thúc ): ");
-            nhapChuoi(thuvien.maTruyen, sizeof(thuvien.maTruyen));
-            if (strcmp(thuvien.maTruyen,"0") == 0)
-            {
-                return;
-            }
-            if (!IsmaTruyen(thuvien.maTruyen))
+            nhapChuoi(thuetruyen.maTruyen, sizeof(thuetruyen.maTruyen));
+            if (strcmp(thuetruyen.maTruyen, "0") == 0) return;
+            if (!IsmaTruyen(thuetruyen.maTruyen))
             {
                 printf("Mã truyện tối đa 10 ký tự !\n");
                 while (getchar() != '\n');
             }
-        } while (!IsmaTruyen(thuvien.maTruyen));
-        printf("DEBUG: %s\n", thuvien.maTruyen);
-
+        } while (!IsmaTruyen(thuetruyen.maTruyen));
         printf("| Nhap tên truyện: ");
-        nhapChuoi(thuvien.tenTruyen, sizeof(thuvien.tenTruyen));
-        printf("DEBUG: %s\n", thuvien.tenTruyen);
-
+        nhapChuoi(thuetruyen.tenTruyen, sizeof(thuetruyen.tenTruyen));
         printf("| Nhập tên tác giả: ");
-        nhapChuoi(thuvien.tacGia, sizeof(thuvien.tacGia));
-        printf("DEBUG: %s\n", thuvien.tacGia);
-
+        nhapChuoi(thuetruyen.tacGia, sizeof(thuetruyen.tacGia));
         printf("| Nhập thể loại: ");
-        nhapChuoi(thuvien.theloai, sizeof(thuvien.theloai));
-
+        nhapChuoi(thuetruyen.theloai, sizeof(thuetruyen.theloai));
         do {
             printf("| Nhập năm xuất bản của sách: ");
-            scanf_s("%d", &thuvien.namxuatban);
+            scanf_s("%d", &thuetruyen.namxuatban);
             while (getchar() != '\n');
-            if (thuvien.namxuatban <= 0)
+            if (thuetruyen.namxuatban <= 0)
             {
                 printf("| Năm xuất bản phải là số dương !\n");
             }
-        } while (thuvien.namxuatban <= 0);
-
+        } while (thuetruyen.namxuatban <= 0);
         printf("| Nhập tình trạng của truyện: ");
-        nhapChuoi(thuvien.tinhtrang, sizeof(thuvien.tinhtrang));
-        EnQueue(q, thuvien);
+        nhapChuoi(thuetruyen.tinhtrang, sizeof(thuetruyen.tinhtrang));
+        EnQueue(q, thuetruyen);
         count++;
     }
 }
 //2. Hiển thị danh sách các phần tử.
-void xuat1(thuvien* tv)
+void xuat1(thuetruyen* tv)
 {
     printf("| %-10s | %-26s | %-22s | %-20s | %-10d | %-12s |\n",
         tv->maTruyen,
@@ -280,9 +392,9 @@ void CapnhatTruyen(Queue* q, char maTruyenxoa[])
 }
 // SẮP XẾP DANH SÁCH
 // Hàm đổi chỗ hai phần tử
-void swap(thuvien* a, thuvien* b)
+void swap(thuetruyen* a, thuetruyen* b)
 {
-    thuvien temp = *a;
+    thuetruyen temp = *a;
     *a = *b;
     *b = temp;
 }
@@ -450,7 +562,7 @@ void DocFile(Queue* q, const char* filename)
         return;
     }
     int count = 0;  
-    thuvien tv;
+    thuetruyen tv;
     while (fscanf(f, "%[^|]|%[^|]|%[^|]|%[^|]|%d|%[^\n]\n",
         tv.maTruyen,
         tv.tenTruyen,

@@ -78,7 +78,7 @@ int main()
 		case 5:
 		{
 			printf("| ĐÃ CHỌN [Cho thuê truyện]\n");
-			thuvien thue = DeQueue(&q);
+			thuetruyen thue = DeQueue(&q);
 			if (strcmp(thue.maTruyen, "NULL") == 0) {
 				printf("| Không có truyện nào để cho thuê!\n");
 				break;
@@ -196,7 +196,7 @@ int main()
 			if (isEmpty(&q)) {
 				printf("| Danh sách truyện rỗng!\n");
 			} else {
-				thuvien newest = Front(&q);
+				thuetruyen newest = Front(&q);
 				printf("| Truyện gần/mới nhất:\n");
 				printf("| Mã truyện   : %s\n", newest.maTruyen);
 				printf("| Tên truyện  : %s\n", newest.tenTruyen);
@@ -204,7 +204,7 @@ int main()
 				printf("| Năm xuất bản: %d\n", newest.namxuatban);
 				printf("| Tình trạng  : %s\n", newest.tinhtrang);
 				printf("==============================\n");
-				thuvien oldest = Rear(&q);	
+				thuetruyen oldest = Rear(&q);	
 				printf("| Truyện mới được thêm vào:\n");	
 				printf("| Mã truyện   : %s\n", oldest.maTruyen);	
 				printf("| Tên truyện  : %s\n", oldest.tenTruyen);
