@@ -97,7 +97,7 @@ void themTruyendau(List* L)
     }
 }
 // Thêm truyện vào cuoi danh sách
-void themTruyendau(List* L)
+void themTruyencuoi(List* L)
 {
     while (true)
     {
@@ -130,7 +130,173 @@ void themTruyendau(List* L)
     }
 }
 // Hiển thị danh sách truyện
-void 
+void xuatDSTruyen(List* L)
+{
+    if (L->head == NULL) {
+        printf("| Danh sách truyện rỗng !\n");
+        return;
+    }
+    printf("| %-10s | %-26s | %-22s | %-20s | %-10s | %-12s |\n",
+        "Mã Truyện", "Tên Truyện", "Tác Giả", "Thể Loại", "Năm XB", "Tình Trạng");
+    Nodetruyen* temp = L->head;
+    while (temp != NULL) {
+        printf("| %-10s | %-26s | %-22s | %-20s | %-10d | %-12s |\n",
+            temp->data.maTruyen, temp->data.tenTruyen, temp->data.tacGia,
+            temp->data.theloai, temp->data.namxuatban, temp->data.tinhtrang);
+        temp = temp->pNext;
+    }
+}
+void capNhatTruyen(List* L, char maTruyen[])
+{
+    Nodetruyen* temp = L->head;
+    while (temp != NULL) {
+        if (strcmp(temp->data.maTruyen, maTruyen) == 0) {
+            printf("| Nhập tên truyện mới: ");
+            nhapChuoi(temp->data.tenTruyen, sizeof(temp->data.tenTruyen));
+            printf("| Nhập tên tác giả mới: ");
+            nhapChuoi(temp->data.tacGia, sizeof(temp->data.tacGia));
+            printf("| Nhập thể loại mới: ");
+            nhapChuoi(temp->data.theloai, sizeof(temp->data.theloai));
+            do {
+                printf("| Nhập năm xuất bản mới của sách: ");
+                scanf_s("%d", &temp->data.namxuatban);
+                while (getchar() != '\n');
+                if (temp->data.namxuatban <= 0) {
+                    printf("| Năm xuất bản phải là số dương !\n");
+                }
+            } while (temp->data.namxuatban <= 0);
+            printf("| Nhập tình trạng mới của truyện: ");
+            nhapChuoi(temp->data.tinhtrang, sizeof(temp->data.tinhtrang));
+            return;
+        }
+        temp = temp->pNext;
+    }
+    printf("| Không tìm thấy mã truyện %s trong danh sách !\n", maTruyen);
+}
+// Ham tim truyen theo ma
+Nodetruyen* timTruyen(List* L, char maTruyentim[])
+{
+    Nodetruyen* temp = L->head;
+    while (temp != NULL)
+    {
+        if (strcmp(temp->data.maTruyen, maTruyentim) == 0)
+            return temp;
+        temp = temp->pNext;
+    }
+}
+// Ham ghi danh sach truyen sang file txt
+int ghiFileTruyen(List* L, const char* filename)
+{
+    FILE* f = fopen(filename, "w");
+    if (f == NULL) return 0;
+    else
+    {
+        Nodetruyen* temp = L->head;
+        int count = 0;
+        while (temp != NULL)
+        {
+            fprintf(f, "|%s|%s|%s|%s|%d|%s|%d|\n",
+                temp->data.maTruyen,
+                temp->data.tenTruyen,
+                temp->data.tacGia,
+                temp->data.theloai,
+                temp->data.namxuatban,
+                temp->data.tinhtrang,
+                temp->data.soluong);
+            temp = temp->pNext;
+            count++;
+        }
+        fclose(f);
+        return count;
+    }
+}
+// Ham doc danh sach truyen tu file txt
+int docFileTruyen(List* L, const char* filename)
+{
+    FILE* f = fopen(filename, "r");
+    if (f == NULL) return -1;
+    else
+    {
+        datatruyen truyen;
+        int count = 0;
+        int loi = 0;
+        char line[300];
+        while (fgets(line, sizeof(line), f) != NULL)      /* fgets se doc tu file f (filename) 
+                                                                   sau do dua du lieu vao bien line
+                                                                   den phan tu size-1 cua bien line hoac gap \n hoac \0   */                                                                              
+        {
+            int result = sscanf(line, "|%[^|]|%[^|]|%[^|]|%[^|]|%d|%[^|]|%d|",        // sscanf trich du lieu tu line                                                                                      
+                truyen.maTruyen,                                                      // dua vao cac truong cua bien truyen
+                truyen.tenTruyen,
+                truyen.tacGia,
+                truyen.theloai,
+                &truyen.namxuatban,
+                truyen.tinhtrang,
+                &truyen.soluong);
+            if (result == 7)
+            {
+                AddHead(L, truyen);
+                count++;
+            }
+            else
+            {
+                loi++;
+            }
+        }
+        fclose(f);
+        printf("| So truyen bi doc loi : %d", loi);
+        return count;
+    }
+}
+// Ham xoa 1 truyen theo maTruyen
+int xoaTruyen(List* L, char maTruyenxoa[])
+{
+    Nodetruyen* temp = L->head;
+    while (temp != NULL)
+    {
+        if (strcmp(temp->data.maTruyen, maTruyenxoa) == 0)
+            break;
+        temp = temp->pNext;
+    }
+    if (temp == NULL) return 0;
+    // Neu node can xoa la node duy nhat ( only )
+    if (temp == L->head && temp == L->tail)
+    {
+        free(temp);
+        L->head = L->tail = NULL;
+        return 1;
+    }
+    // Neu node can xoa o dau danh sach ( head )
+    if (temp == L->head)
+    {
+        L->head = L->head->pNext;
+        free(temp);
+        return 1;
+    }
+    // Neu node can xoa o cuoi danh sach ( tail )
+    if (temp == L->tail)
+    {
+        Nodetruyen* prev = L->head;
+        while (prev->pNext != temp)
+        {
+            prev = prev->pNext;
+        }
+        prev->pNext = NULL;
+        L->tail = prev;
+        free(temp);
+        return 1;
+    }
+    // Neu node can xoa o giua danh sach ( mid )
+    else
+    {
+        Nodetruyen* tempsau = temp->pNext;
+        temp->data = temp->pNext->data;
+        temp->pNext = temp->pNext->pNext;
+        free(tempsau);
+        return 1;
+    }   
+}
+
 // Khởi tạo Queue
 void Init(Queue *q) {
     q->front = NULL;

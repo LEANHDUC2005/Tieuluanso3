@@ -48,12 +48,13 @@ int Kiemtratrungma(List* L, char makiemtra[]);
 void initList(List *L); 
 void AddHead(List* L, datatruyen data); 
 void AddTail(List* L, datatruyen data); 
-void themTruyen(List *L);
+void themTruyendau(List *L);
+void themTruyencuoi(List* L);
 void xuatDSTruyen(List* L);
 void capNhatTruyen(List* L, char maTruyen[]);
-datatruyen* timTruyen(List* L, char ma[]);
-void docFileTruyen(List* L, const char* filename);
-void ghiFileTruyen(List* L, const char* filename);
+Nodetruyen* timTruyen(List* L, char maTruyentim[]);
+int docFileTruyen(List* L, const char* filename);
+int ghiFileTruyen(List* L, const char* filename);
 void xoaTruyen(List* L, char maTruyen[]);
 void xoaTatCaTruyen(List* L); // nên thêm
 char up_or_down();
